@@ -1,9 +1,11 @@
-from facepy import GraphAPI
-import requests
 import json
 import re
+import os
 import argparse
 from datetime import datetime
+
+import requests
+from facepy import GraphAPI
 
 
 parser = argparse.ArgumentParser()
@@ -20,11 +22,11 @@ if not webhook_url and not args.dry_run:
     print("set MENUBOT_WEBHOOOK_URL in your environment")
     exit(1)
 
-token = os.environ.get('MENUBOT_FACEBOOK_TOKEN')
-# get temporary token: https://developers.facebook.com/tools/explorer/145634995501895/
+APP_ID = os.environ.get('MENUBOT_FACEBOOK_APP_ID')
+APP_SECRET = os.environ.get('MENUBOT_FACEBOOK_APP_SECRET')
 
-if not token:
-    print("set MENUBOT_FACEBOOK_TOKEN in your environment")
+if not APP_ID or not APP_SECRET:
+    print("set MENUBOT_FACEBOOK_APP_ID and MENUBOT_FACEBOOK_APP_SECRET in your environment")
     exit(1)
 
 
@@ -32,9 +34,10 @@ if not token:
 
 page_id = "nimmersatt.smoothies"
 
+token = '{}|{}'.format(APP_ID, APP_SECRET)
 graph = GraphAPI(token)
 
-datas = graph.get(page_id + '/posts?fields=message', page=True, retry=5)
+datas = graph.get(page_id + '/posts?fields=message,created_time', page=True, retry=1)
 
 
 # parse facebook messages
@@ -44,22 +47,21 @@ message = ""
 for data in datas:
     break  # datas is a generater, we can't just do data[0]
 
-
 posts = data['data']
 
 today = datetime.now().date()
 
 for post in posts:
-    message = post.get('message')
     created_date = datetime.strptime(post['created_time'], "%Y-%m-%dT%H:%M:%S+0000").date()
-    if created_date == today and "heute" in message.lower():
+    if created_date == today:
+        message = post.get('message')
         break
 
 if message:
     food = re.findall(r'^\s*\*\s*(.+)$', message, re.M)
 
 
-# send menu to Grapw
+# send menu to Grape
 
 if food:
     webhook_text = "**Nimmersatt**\n\nToday, %s:\n%s" % (created_date.strftime('%A'), ''.join(['\n* ' + item for item in food]))

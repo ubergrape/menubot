@@ -1,2 +1,8 @@
+# general
+
 beautifulsoup4==4.6.0
 requests==2.13.0
+
+# nimmersatt
+
+facepy==1.0.9
