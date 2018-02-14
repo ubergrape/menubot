@@ -2,14 +2,21 @@ from facepy import GraphAPI
 import requests
 import json
 import re
+import argparse
 from datetime import datetime
+
+
+parser = argparse.ArgumentParser()
+parser.add_argument("--dry-run", action="store_true",
+                    help="Write webhook text to stdout, don't send to Grape")
+args = parser.parse_args()
 
 
 # configuration
 
 webhook_url = os.environ.get('MENUBOT_WEBHOOOK_URL')
 
-if not webhook_url:
+if not webhook_url and not args.dry_run:
     print("set MENUBOT_WEBHOOOK_URL in your environment")
     exit(1)
 
@@ -56,8 +63,11 @@ if message:
 
 if food:
     webhook_text = "**Nimmersatt**\n\nToday, %s:\n%s" % (created_date.strftime('%A'), ''.join(['\n* ' + item for item in food]))
-    payload = { 'text': webhook_text}
-    requests.post(webhook_url, data=data)
+    if args.dry_run:
+        print(webhook_text)
+    else:
+        payload = { 'text': webhook_text}
+        requests.post(webhook_url, data=data)
 
 else:
     print("No menu found today, try again later")
