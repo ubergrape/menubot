@@ -6,3 +6,7 @@ requests==2.13.0
 # nimmersatt
 
 facepy==1.0.9
+
+# gangl
+
+PyPDF2
