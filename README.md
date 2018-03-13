@@ -2,27 +2,67 @@
 
 install requirements:
 
-```
+```bash
 pip3 install -r requirements.txt
 ```
 
-run:
+configure:
 
-```
-export MENUBOT_WEBHOOOK_URL=https://staging.chatgrape.com/services/hook/custom/YYY/XXXXXXX/
-python3 menubot.py --crawler gangl.GanglCrawler
+```bash
+export MENUBOT_WEBHOOOK_URL=...
+export MENUBOT_FACEBOOK_APP_ID=...
+export MENUBOT_FACEBOOK_APP_SECRET=...
 ```
 
-or run all:
+## Usage
 
-```
+run all crawlers:
+
+```bash
 python3 menubot.py
 ```
 
+run just one crawler:
 
----
+```bash
+python3 menubot.py --crawler gangl.GanglCrawler
+```
 
-todo:
+just print text, don't send to webhook
+```bash
+python3 menubot.py --dry-run
+```
+
+## Deploy to heroku
+
+1. create app, configure and push to heroku
+
+    ```bash
+    heroku create 
+    heroku config:set MENUBOT_WEBHOOOK_URL=....
+    heroku config:set MENUBOT_FACEBOOK_APP_ID=...
+    heroku config:set MENUBOT_FACEBOOK_APP_SECRET=...
+    heroku buildpacks:add https://github.com/heroku/heroku-buildpack-locale
+    git push heroku master
+    ```
+
+1. test:
+
+    ```bash
+    heroku run python menubot.py
+    ```
+
+
+2. add scheduler:
+
+    ```bash
+    heroku addons:create scheduler:standard
+    heroku addons:open scheduler
+    ```
+
+    configure command `python menubot.py` to run every day at UTC 10:30
+
+## Todo
 
 - add Unibräu
 - add Suppenbar https://www.suppenbar.at/wochenkarte2
