@@ -62,6 +62,31 @@ python3 menubot.py --dry-run
 
     configure command `python menubot.py` to run every day at UTC 10:30
 
+## Adding a crawler
+
+1. crate new python file in "crawlers" directory:
+
+    ```
+    from . import MenuCrawler
+
+    class XxxCrawler(MenuCrawler):
+        name = "Xxx"
+
+        def run(self):
+            # TODO: your code
+
+            self.menu_text = "the menu text you found"
+    ```
+
+    where Xxx is the Restaurant name
+
+1. add code in the `run` method
+1. add all requirements to "requirements.txt"
+1. test with `python3 menubot.py --crawler xxx.XxxCrawler --dry-run`
+1. Add your crawler to list of crawlers in "menubot.py"
+1. create a PR
+
+
 ## Todo
 
 - add Unibräu
