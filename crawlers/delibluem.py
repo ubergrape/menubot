@@ -52,8 +52,7 @@ class DelibluemCrawler(MenuCrawler):
         day_text = today_name
 
         for day in week:
-            if day.text.lower().startswith(today_name.lower()):
-                day_text = day.text
+            if today_name.lower() in day.text.lower():
                 self.menu_text = day.fetchNextSiblings()[0].text
                 return
 
