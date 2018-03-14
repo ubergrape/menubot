@@ -96,4 +96,4 @@ class GanglCrawler(MenuCrawler):
             suppe = m.group(1).replace('\n',' ')
             t1 = m.group(2).replace('\n',' ')
             t2 = m.group(3).replace('\n',' ')
-            self.menu_text = "T1: {}\nT2: {}".format(suppe, t1, t2)
+            self.menu_text = "Suppe: {}\nT1: {}\nT2: {}".format(suppe, t1, t2)
