@@ -42,8 +42,7 @@ class DelibluemCrawler(MenuCrawler):
         start_date = end_date - timedelta(days = 6)
 
         if not start_date <= date.today() <= end_date:
-            print("The menu is not up to date:")
-            print(header_text)
+            self.error_text = "The menu is not up to date: {}".format(header_text)
             return
 
 
@@ -56,4 +55,7 @@ class DelibluemCrawler(MenuCrawler):
             if day.text.lower().startswith(today_name.lower()):
                 day_text = day.text
                 self.menu_text = day.fetchNextSiblings()[0].text
-                break
+                return
+
+        self.error_text = "{} not found in menu".format(today_name)
+

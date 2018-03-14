@@ -16,10 +16,7 @@ crawlers = [
 
 
 def send_to_grape(crawler):
-    if crawler.menu_text:
-        webhook_text = "**{}**\n\n{}".format(crawler.name, crawler.menu_text)
-    else:
-        webhook_text = "**{}**\n\n(no menu found)".format(crawler.name)
+    webhook_text = "**{}**\n\n{}".format(crawler.name, crawler.get_webhook_text())
     payload = { 'text': webhook_text}
     print()
     print(webhook_text)

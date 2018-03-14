@@ -79,7 +79,7 @@ class GanglCrawler(MenuCrawler):
         monday = today - timedelta(days=today.weekday())
 
         if not menu_date >= monday:
-            print("Menu is for the week starting at {}, but this week's monday is {}".format(menu_date, monday))
+            self.error_text = "Menu is for the week starting at {}, but this week's monday is {}".format(menu_date, monday)
             return
 
         # ------------------------------------------------------------------------------

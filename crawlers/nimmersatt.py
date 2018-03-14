@@ -53,7 +53,7 @@ class NimmersattCrawler(MenuCrawler):
         if message:
             food = re.findall(r'^\s*\*\s*(.+)$', message, re.M)
         else:
-            print("No menu found today, try again later")
+            self.error_text = "No menu found today, try again later"
             return
 
         self.menu_text = "Today, %s:\n%s" % (created_date.strftime('%A'), ''.join(['\n* ' + item for item in food]))
