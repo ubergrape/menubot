@@ -44,7 +44,7 @@ class DelibluemCrawler(MenuCrawler):
         if not start_date <= date.today() <= end_date:
             print("The menu is not up to date:")
             print(header_text)
-            exit(1)
+            return
 
 
         # find today's menu
