@@ -9,6 +9,7 @@ import requests
 crawlers = [
     "delibluem.DelibluemCrawler",
     "gangl.GanglCrawler",
+    "unibrau.UnibrauCrawler",
     "nimmersatt.NimmersattCrawler",
 ]
 
