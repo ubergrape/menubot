@@ -66,7 +66,7 @@ python3 menubot.py --dry-run
 
 1. crate new python file in "crawlers" directory:
 
-    ```
+    ```python
     from . import MenuCrawler
 
     class XxxCrawler(MenuCrawler):
@@ -89,5 +89,4 @@ python3 menubot.py --dry-run
 
 ## Todo
 
-- add Unibräu
 - add Suppenbar https://www.suppenbar.at/wochenkarte2
