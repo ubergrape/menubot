@@ -53,7 +53,11 @@ class DelibluemCrawler(MenuCrawler):
 
         for day in week:
             if today_name.lower() in day.text.lower():
-                self.menu_text = day.fetchNextSiblings()[0].text
+                text_soup = day.fetchNextSiblings()[0]
+                # replace <br/> with linebreaks, otherwise everything is in one line
+                for br in text_soup.find_all("br"):
+                    br.replace_with("\n")
+                self.menu_text = text_soup.text
                 return
 
         self.error_text = "{} not found in menu".format(today_name)
