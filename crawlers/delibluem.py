@@ -14,6 +14,12 @@ class DelibluemCrawler(MenuCrawler):
 
 
     def run(self):
+        # deli bluem in the 8th district is not open on monday
+        # even though there is something on the menu on the website
+        if date.today().weekday() == 0:
+            self.menu_text = "Closed on mondays"
+            return
+
         # this is needed for german day/month names from the calendar package
         locale.setlocale(locale.LC_ALL, 'de_DE')
 
