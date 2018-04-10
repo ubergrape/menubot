@@ -75,7 +75,14 @@ python3 menubot.py --dry-run
         def run(self):
             # TODO: your code
 
-            self.menu_text = "the menu text you found"
+            # put errors in self.error_text
+            if something_goes_wrong:
+                self.error_text = "The menu is not up to date"
+                return
+
+            # put the menu in self.error_text
+            self.menu_text = "The menu text you found"
+
     ```
 
     where Xxx is the Restaurant name
@@ -90,3 +97,4 @@ python3 menubot.py --dry-run
 ## Todo
 
 - add Suppenbar https://www.suppenbar.at/wochenkarte2
+- dynamically load all crawlers, so they don't need to be added to menubot.py
