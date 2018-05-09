@@ -96,6 +96,5 @@ python3 menubot.py --dry-run
 
 ## Todo
 
-- fix unibräu. homepage has link to pdf now in Button "Tageskarte"
 - add Suppenbar https://www.suppenbar.at/wochenkarte2
 - dynamically load all crawlers, so they don't need to be added to menubot.py

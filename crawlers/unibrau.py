@@ -37,7 +37,7 @@ class UnibrauCrawler(MenuCrawler):
 
         # bring it into a reasonable format
 
-        text = text.replace('\n', ' ')  # remove line breaks
+        text = text.replace('\n', '')  # remove line breaks
         text = ' '.join(text.split())  # remove multiple blanks
 
         # find menu in text
@@ -47,7 +47,14 @@ class UnibrauCrawler(MenuCrawler):
 
         today = date.today()
         today_name = list(calendar.day_name)[today.weekday()].upper()
-        m = re.search(today_name + r'[, ]+?Suppe: (?P<suppe>.+?) Tagesteller: (?P<tagesteller>.+?)\s+Vegetarisch:\s+(?P<vegetarisch>.+?)\s+(?:MONTAG|DIENSTAG|MITTWOCH|DONNERSTAG|FREITAG|ÄNDERUNGEN)', text)
+        m = re.search(r'(' + today_name + r'.+?)(?:MONTAG|DIENSTAG|MITTWOCH|DONNERSTAG|FREITAG|ÄNDERUNGEN)', text)
+
+
 
         if m:
-            self.menu_text = "Suppe: {}\nTagesteller: {}\nVegatarisch: {}".format(m.group('suppe'), m.group('tagesteller'), m.group('vegetarisch'))
+            # add some line breaks if we find a menu. if not, we will just use the text
+            # sometimes they have special Feiertags text
+            self.menu_text = m.group(1) \
+                .replace('Suppe', '\n\nSuppe') \
+                .replace('Menü 1', '\nMenü 1') \
+                .replace('Vegetarisch', '\nVegetarisch')
