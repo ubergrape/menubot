@@ -21,7 +21,7 @@ class SuppenbarCrawler(MenuCrawler, FacebookCrawler):
             self.menu_text = today_menu
 
         else:
-            self.error_text = "No menu found today, try again later"
+            self.error_text = "No daily special found today"
             return
 
 
