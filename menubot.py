@@ -7,7 +7,6 @@ import requests
 
 # TODO automate this
 crawlers = [
-    "delibluem.DelibluemCrawler",
     "gangl.GanglCrawler",
     "unibrau.UnibrauCrawler",
     "nimmersatt.NimmersattCrawler",
