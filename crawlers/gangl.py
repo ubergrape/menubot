@@ -90,8 +90,8 @@ class GanglCrawler(MenuCrawler):
         locale.setlocale(locale.LC_ALL, 'de_DE')
 
         today_name = list(calendar.day_name)[today.weekday()]
-        m = re.search(today_name + r'(?:\:?)\n([\s\S]*?)T1:([\s\S]*?)T2:([\s\S]*?)(?:Montag|Dienstag|Mittwoch|Donnerstag|Freitag|Wochenangebot)', text)
 
+        m = re.search(today_name + r'(?:\:?\s*)\nTagessuppe:([\s\S]*?)T1:([\s\S]*?)T2:([\s\S]*?)(?:Montag|Dienstag|Mittwoch|Donnerstag|Freitag|Wochenangebot)', text)
         if m:
             suppe = m.group(1).replace('\n',' ')
             t1 = m.group(2).replace('\n',' ')
