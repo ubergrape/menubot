@@ -79,7 +79,7 @@ class GanglCrawler(MenuCrawler):
         monday = today - timedelta(days=today.weekday())
 
         if not menu_date >= monday:
-            self.error_text = "Menu is for the week starting at {}, but this week's monday is {}".format(menu_date, monday)
+            self.error_text = "Menu is for the week starting at {}, but this week's monday is {}. [menu PDF]({})".format(menu_date, monday, pdf_url)
             return
 
         # ------------------------------------------------------------------------------
@@ -97,3 +97,5 @@ class GanglCrawler(MenuCrawler):
             t1 = m.group(2).replace('\n',' ')
             t2 = m.group(3).replace('\n',' ')
             self.menu_text = "Suppe: {}\nT1: {}\nT2: {}".format(suppe, t1, t2)
+        else:
+            self.error_text = "Couldn't find today's menu in the [menu PDF]({})".format(pdf_url)

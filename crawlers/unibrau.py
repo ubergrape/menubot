@@ -58,3 +58,5 @@ class UnibrauCrawler(MenuCrawler):
                 .replace('Suppe', '\n\nSuppe') \
                 .replace('Menü 1', '\nMenü 1') \
                 .replace('Vegetarisch', '\nVegetarisch')
+        else:
+            self.error_text = "Couldn't find today's menu in the [menu PDF]({})".format(pdf_url)
