@@ -10,6 +10,10 @@ from facepy import GraphAPI
 from . import MenuCrawler
 from .facebook import FacebookCrawler
 
+
+# nimmersatt is dead, this is just left here as an example on how to use
+# the facebook crawler
+
 class NimmersattCrawler(MenuCrawler, FacebookCrawler):
     name = "Nimmersatt"
     facebook_page_id = "nimmersatt.smoothies"

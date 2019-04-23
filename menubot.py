@@ -9,7 +9,6 @@ import requests
 crawlers = [
     "gangl.GanglCrawler",
     "unibrau.UnibrauCrawler",
-    "nimmersatt.NimmersattCrawler",
 ]
 
 
