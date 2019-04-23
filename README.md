@@ -97,4 +97,3 @@ python3 menubot.py --dry-run
 ## Todo
 
 - add Suppenbar https://www.suppenbar.at/wochenkarte2
-- dynamically load all crawlers, so they don't need to be added to menubot.py

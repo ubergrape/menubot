@@ -5,7 +5,6 @@ import importlib
 import requests
 
 
-# TODO automate this
 crawlers = [
     "gangl.GanglCrawler",
     "unibrau.UnibrauCrawler",
