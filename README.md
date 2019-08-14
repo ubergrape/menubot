@@ -33,7 +33,7 @@ just print text, don't send to webhook
 python3 menubot.py --dry-run
 ```
 
-## Deploy to heroku
+## Deploy to heroku (first time)
 
 1. create app, configure and push to heroku
 
@@ -61,6 +61,12 @@ python3 menubot.py --dry-run
     ```
 
     configure command `python menubot.py` to run every day at UTC 10:30
+
+## Deploy to heroku (update existing bot)
+
+```bash
+    git push heroku master
+```
 
 ## Adding a crawler
 
