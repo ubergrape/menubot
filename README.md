@@ -80,7 +80,7 @@ python3 menubot.py --dry-run
                 self.error_text = "The menu is not up to date"
                 return
 
-            # put the menu in self.error_text
+            # put the menu in self.menu_text
             self.menu_text = "The menu text you found"
 
     ```
