@@ -8,6 +8,7 @@ import requests
 crawlers = [
     "gangl.GanglCrawler",
     "unibrau.UnibrauCrawler",
+    "frommehelene.FrommeHeleneCrawler",
 ]
 
 
