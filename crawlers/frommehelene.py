@@ -1,9 +1,9 @@
-import requests
-
-from . import MenuCrawler
+from datetime import date, datetime, timedelta
 
 import requests
 from bs4 import BeautifulSoup
+
+from . import MenuCrawler
 
 
 class FrommeHeleneCrawler(MenuCrawler):
@@ -17,6 +17,17 @@ class FrommeHeleneCrawler(MenuCrawler):
         response = requests.get(url)
         soup = BeautifulSoup(response.text, 'html.parser')
 
+        # is this menu for this week?
+
+        header = soup.find('h1', class_="csc-firstHeader")
+        menu_date_str = header.text.split(' ')[1]
+        menu_date = datetime.strptime(menu_date_str, "%d.%m.").date().replace(year=date.today().year)
+        today = date.today()
+        monday = today - timedelta(days=today.weekday())
+
+        if not menu_date == monday:
+            self.error_text = "Menu is for the week starting at {}, but this week's monday is {}. [menu page]({})".format(menu_date, monday, url)
+            return
 
         # find menu, it's in a confusing table
 
