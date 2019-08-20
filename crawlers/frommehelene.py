@@ -1,4 +1,6 @@
 from datetime import date, datetime, timedelta
+import locale
+import calendar
 
 import requests
 from bs4 import BeautifulSoup
@@ -29,6 +31,10 @@ class FrommeHeleneCrawler(MenuCrawler):
             self.error_text = "Menu is for the week starting at {}, but this week's monday is {}. [menu page]({})".format(menu_date, monday, url)
             return
 
+        # this is needed for german day/month names from the calendar package
+        locale.setlocale(locale.LC_ALL, 'de_DE')
+        today_name = list(calendar.day_name)[today.weekday()]
+
         # find menu, it's in a confusing table
 
         table = soup.find("table", class_="contenttable")
@@ -37,7 +43,7 @@ class FrommeHeleneCrawler(MenuCrawler):
         start = None
         end = None
         for i, td in enumerate(tds):
-            if start is None and td.text.strip().startswith("Mittwoch"):
+            if start is None and td.text.strip().startswith(today_name):
                 start = i
             if end is None and start is not None and "td-0" in td.attrs['class'] and td.text.strip() == "":
                 end = i
