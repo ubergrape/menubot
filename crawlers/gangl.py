@@ -32,7 +32,12 @@ class GanglCrawler(MenuCrawler):
         #   });
         #   </script>
 
-        pdf_url = re.search(r"var link = '(\S+)';", response.text).group(1)
+        m = re.search(r"var link = '(\S+)';", response.text)
+        if m:
+            pdf_url = m.group(1)
+        else:
+            self.error_text = "Couldn't find menu pdf on the homepage http://www.gangl.at/'"
+            return
 
         # ------------------------------------------------------------------------------
         # download latest pdf
