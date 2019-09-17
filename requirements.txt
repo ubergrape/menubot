@@ -10,3 +10,7 @@ facepy==1.0.9
 # gangl
 
 PyPDF2
+
+# OCR for guru1080
+
+pytesseract==0.3.0
