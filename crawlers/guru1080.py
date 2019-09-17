@@ -1,42 +1,45 @@
+import re
+from io import BytesIO
+
 try:
     from PIL import Image
 except ImportError:
     import Image
 import pytesseract
+import requests
+from bs4 import BeautifulSoup
 
-# TODO: prepare:
-# - proper crawler code
-# - pip install pytesseract
-# - install tesseract https://github.com/tesseract-ocr/tesseract
-# - download "deu" training data https://github.com/tesseract-ocr/tessdata/blob/master/deu.traineddata
-# - mv deu.traineddata /usr/local/share/tessdata
-#
 
 # get image url
 
-# https://www.guru1080.at/wochenmen%C3%BC/
+url = "https://www.guru1080.at/wochenmen%C3%BC/"
 
-# TODO
+response = requests.get(url)
+soup = BeautifulSoup(response.text, 'html.parser')
+
+img_dom = soup.select('#content_area img')
+
+if img_dom:
+    img_url = img_dom[0].attrs['src']
+else:
+    self.error_text = "Menu image not found, please check the [menu page]({})".format(url)
+    exit(0)
 
 # download image
 
-# TODO
+response = requests.get(img_url)
+img = Image.open(BytesIO(response.content))
 
-# upscale image
-# tesseract doesn't work properly with small text
+# upscale image because tesseract doesn't work properly with small text
 # https://stackoverflow.com/questions/4909396/is-there-any-way-to-improve-tesseract-ocr-with-small-fonts
 
-# TODO: use PIL or imagemagick via python
-# convert -resize 600% menu.png menu600.png
-
-
+width, height = img.size
+img_resized = img.resize((width*4, height*4), Image.LANCZOS)
+img_resized.save("test.png", 'PNG')
 
 # parse text
 
-filename = 'menu600.png'
-text = pytesseract.image_to_string(Image.open(filename), lang='deu')
-
-
+text = pytesseract.image_to_string(img_resized, lang='deu')
 
 
 # clean text
@@ -45,7 +48,18 @@ text = pytesseract.image_to_string(Image.open(filename), lang='deu')
 p = re.compile('[A-Z ]+\n')
 text = p.sub("",text)
 
+# strip single character lines lol
+p = re.compile('.\n')
+text = p.sub("",text)
+
+# strip bio-vegan
+p = re.compile('.*bio-vegan.*\n')
+text = p.sub("",text)
+
 # strip multiple new lines
 p = re.compile('\n+')
 text = p.sub("\n",text).strip()
 
+
+
+print(text)
