@@ -1,5 +1,7 @@
 # Menubot
 
+## Local Development
+
 install requirements:
 
 ```bash
@@ -13,6 +15,13 @@ export MENUBOT_WEBHOOOK_URL=...
 export MENUBOT_FACEBOOK_APP_ID=...
 export MENUBOT_FACEBOOK_APP_SECRET=...
 ```
+
+to run crawlers that do OCR (e.g. "Guru1080"), you also need tesseract:
+
+- `pip install pytesseract`
+- install tesseract https://github.com/tesseract-ocr/tesseract
+- download "deu" training data https://github.com/tesseract-ocr/tessdata/blob/master/deu.traineddata
+- `mv deu.traineddata /usr/local/share/tessdata`
 
 ## Usage
 
@@ -43,6 +52,16 @@ python3 menubot.py --dry-run
     heroku config:set MENUBOT_FACEBOOK_APP_ID=...
     heroku config:set MENUBOT_FACEBOOK_APP_SECRET=...
     heroku buildpacks:add https://github.com/heroku/heroku-buildpack-locale
+    ```
+
+    if you also want OCR:
+    ```
+    heroku buildpacks:add --index 1 https://github.com/heroku/heroku-buildpack-apt
+    heroku config:set TESSDATA_PREFIX=/app/.apt/usr/share/tesseract-ocr/4.00/tessdata
+    ```
+
+    push to heroku:
+    ```
     git push heroku master
     ```
 
