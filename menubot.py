@@ -10,6 +10,7 @@ crawlers = [
     "unibrau.UnibrauCrawler",
     "frommehelene.FrommeHeleneCrawler",
     "guru1080.Guru1080Crawler",
+    "alternatives.AlternativesCrawler",
 ]
 
 
