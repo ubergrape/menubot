@@ -121,4 +121,5 @@ python3 menubot.py --dry-run
 
 ## Todo
 
-- add Suppenbar https://www.suppenbar.at/wochenkarte2
+- add Salonga https://goo.gl/maps/pcQ5zkBux6NCjcQh9
+- add Kräuterdrogerie https://www.kraeuterdrogerie.at/mittagsmenue
