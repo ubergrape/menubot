@@ -40,6 +40,18 @@ class UnibrauCrawler(MenuCrawler):
         text = text.replace('\n', '')  # remove line breaks
         text = ' '.join(text.split())  # remove multiple blanks
 
+        #  is this menu for this week?
+
+        m = re.search(r'\w+, (\d+\.\s\w+)', text)
+        menu_date = datetime.strptime(m.group(1), "%d. %B").date()
+        today = date.today()
+        monday = today - timedelta(days=today.weekday())
+        menu_date = menu_date.replace(year=monday.year)
+
+        if not menu_date >= monday:
+            self.error_text = "Menu is for the week starting at {}, but this week's monday is {}. [menu PDF]({})".format(menu_date, monday, pdf_url)
+            return
+
         # find menu in text
 
         # this is needed for german day/month names from the calendar package
