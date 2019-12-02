@@ -1,8 +1,6 @@
 import re
-import os
 import locale
 import calendar
-import argparse
 from io import BytesIO
 from datetime import datetime, date, timedelta
 
@@ -60,8 +58,6 @@ class UnibrauCrawler(MenuCrawler):
         today = date.today()
         today_name = list(calendar.day_name)[today.weekday()].upper()
         m = re.search(r'(' + today_name + r'.+?)(?:MONTAG|DIENSTAG|MITTWOCH|DONNERSTAG|FREITAG|ÄNDERUNGEN)', text)
-
-
 
         if m:
             # add some line breaks if we find a menu. if not, we will just use the text
