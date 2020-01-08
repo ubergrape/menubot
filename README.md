@@ -122,4 +122,3 @@ python3 menubot.py --dry-run
 ## Todo
 
 - add Salonga https://goo.gl/maps/pcQ5zkBux6NCjcQh9
-- add Kräuterdrogerie https://www.kraeuterdrogerie.at/mittagsmenue

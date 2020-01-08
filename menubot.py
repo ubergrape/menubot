@@ -11,6 +11,7 @@ crawlers = [
     "unibrau.UnibrauCrawler",
     "frommehelene.FrommeHeleneCrawler",
     "guru1080.Guru1080Crawler",
+    "krauterdrogerie.KrauterdrogerieCrawler",
     "alternatives.AlternativesCrawler",
 ]
 
