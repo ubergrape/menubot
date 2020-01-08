@@ -1,6 +1,7 @@
 import os
 import argparse
 import importlib
+import traceback
 
 import requests
 
@@ -55,6 +56,10 @@ if __name__ == '__main__':
     else:
         print("Running all crawlers")
         for crawler_path in crawlers:
-            crawler = load_crawler(crawler_path)
-            crawler.run()
-            send_to_grape(crawler)
+            try:
+                crawler = load_crawler(crawler_path)
+                crawler.run()
+                send_to_grape(crawler)
+            except Exception as e:
+                print("ERROR with crawler %s. Continuing..." % crawler_path)
+                print(traceback.format_exc())
