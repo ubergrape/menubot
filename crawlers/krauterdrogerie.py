@@ -25,7 +25,9 @@ class KrauterdrogerieCrawler(MenuCrawler):
 
         locale.setlocale(locale.LC_ALL, 'de_AT')  # to match month names like "Jänner"
         menu_date_text = soup.find_all('h2')[0].text
-        menu_date = datetime.strptime(menu_date_text, "%A, %d. %B").date()
+        # remove the day name because they make typos like "Donnestag"
+        menu_date_text = menu_date_text.split(',')[1].strip()
+        menu_date = datetime.strptime(menu_date_text, "%d. %B").date()
         today = date.today()
         menu_date = menu_date.replace(year=today.year)
 
