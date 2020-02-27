@@ -41,8 +41,9 @@ class UnibrauCrawler(MenuCrawler):
         #  is this menu for this week?
 
         locale.setlocale(locale.LC_ALL, 'de_AT')  # to match month names like "Jänner"
-        m = re.search(r'\w+, (\d+\.\s\w+)', text)
-        menu_date = datetime.strptime(m.group(1), "%d. %B").date()
+        m = re.search(r'\w+, (\d+\.\s?\w+)', text)
+        menu_date = m.group(1).replace('. ', '.')  # strip space, in case it's there
+        menu_date = datetime.strptime(menu_date, "%d.%B").date()
         today = date.today()
         monday = today - timedelta(days=today.weekday())
         menu_date = menu_date.replace(year=monday.year)
