@@ -20,7 +20,14 @@ class UnibrauCrawler(MenuCrawler):
 
         response = requests.get('http://www.unibrau.at/')
         soup = BeautifulSoup(response.text, 'html.parser')
-        pdf_url = soup.select('div.logo_holder a')[0].attrs['href']
+        pdf_links = soup.select('#pdfmenu_div a')
+        pdf_url = next(filter(lambda x: x.text.strip() == "Tageskarte", pdf_links)).attrs['href']
+
+        self.menu_text = "check out [the weekly menu pdf](%s)" % pdf_url
+        return
+
+
+        # TODO
 
         # download latest pdf
 
@@ -35,22 +42,11 @@ class UnibrauCrawler(MenuCrawler):
 
         # bring it into a reasonable format
 
-        text = text.replace('\n', '')  # remove line breaks
-        text = ' '.join(text.split())  # remove multiple blanks
+        text = text.replace('\n \n', '\n')  # remove double line breaks
+        text = text.replace('\n\n', '\n')
+        text = text.replace('\n\n', '\n')
 
-        #  is this menu for this week?
-
-        locale.setlocale(locale.LC_ALL, 'de_AT')  # to match month names like "Jänner"
-        m = re.search(r'\w+, (\d+\.\s?\w+)', text)
-        menu_date = m.group(1).replace('. ', '.')  # strip space, in case it's there
-        menu_date = datetime.strptime(menu_date, "%d.%B").date()
-        today = date.today()
-        monday = today - timedelta(days=today.weekday())
-        menu_date = menu_date.replace(year=monday.year)
-
-        if not menu_date >= monday:
-            self.error_text = "Menu is for the week starting at {}, but this week's monday is {}. [menu PDF]({})".format(menu_date, monday, pdf_url)
-            return
+        # is this menu for this week? no date in pdf anymore
 
         # find menu in text
 
