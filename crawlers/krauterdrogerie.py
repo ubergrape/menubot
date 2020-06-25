@@ -12,30 +12,18 @@ class KrauterdrogerieCrawler(MenuCrawler):
     name = "Kräuterdrogerie"
 
     def run(self):
-        # TODO: your code
 
         # fetch website and parse
 
-        url = "https://www.kraeuterdrogerie.at/mittagsmenue"
+        url = "https://www.kraeuterdrogerie.at/essen"
 
         response = requests.get(url)
         soup = BeautifulSoup(response.text, 'html.parser')
 
-        #  is this menu for today?
-
-        locale.setlocale(locale.LC_ALL, 'de_AT')  # to match month names like "Jänner"
-        menu_date_text = soup.find_all('h2')[0].text
-        # remove the day name because they make typos like "Donnestag"
-        menu_date_text = menu_date_text.split(',')[1].strip()
-        menu_date = datetime.strptime(menu_date_text, "%d. %B").date()
-        today = date.today()
-        menu_date = menu_date.replace(year=today.year)
-
-        if not menu_date == today:
-            self.error_text = "Menu is for {}, but today is {}. [menu website]({})".format(menu_date, today, url)
-            return
+        # the website has no date in the content, so let's hope the menu
+        # really is for today.
 
         # extract text from website
 
-        self.menu_text = soup.find_all('div', class_='menu')[0].text.strip()
-        self.menu_text = self.menu_text.replace("\n\n\n", "\n")
+        h3_items = soup.select('#block-yui_3_17_2_1_1588614159586_48902 h3')[:-1]
+        self.menu_text = '\n'.join(item.text.strip() for item in h3_items)
