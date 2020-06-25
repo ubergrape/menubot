@@ -9,7 +9,7 @@ import requests
 crawlers = [
     "gangl.GanglCrawler",
     "unibrau.UnibrauCrawler",
-    "frommehelene.FrommeHeleneCrawler",
+    # "frommehelene.FrommeHeleneCrawler",
     "guru1080.Guru1080Crawler",
     "krauterdrogerie.KrauterdrogerieCrawler",
     "gagarin.CafeGagarinCrawler",
